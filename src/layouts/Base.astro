@@ -1,0 +1,45 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Foggy — Local AI Infrastructure for Emerging Markets',
+  description = 'Run open-source AI models on standard hardware in Kenya, Rwanda, and beyond. 60-97% cheaper than AWS, with native Swahili and Kinyarwanda support.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://foggy.ai" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Plausible Analytics (swap domain when live) -->
+    <script defer data-domain="foggy.ai" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body class="font-display antialiased">
+    <slot />
+  </body>
+</html>

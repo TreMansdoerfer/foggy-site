@@ -1,0 +1,47 @@
+---
+// Sticky nav — border appears on scroll via a tiny inline script
+---
+
+<header
+  id="site-nav"
+  class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm transition-[border-color] duration-200 border-b border-transparent"
+  style="height: 64px;"
+>
+  <nav class="mx-auto flex h-full max-w-6xl items-center justify-between px-6 md:px-8">
+    <!-- Wordmark -->
+    <a href="/" class="text-foggy-teal text-[22px] font-bold leading-none">Foggy</a>
+
+    <!-- Center links (hidden on mobile) -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#problem" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Why Foggy</a>
+      <a href="#evidence" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">How it works</a>
+      <a href="#personas" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Who it's for</a>
+    </div>
+
+    <!-- CTA -->
+    <a
+      href="#cta"
+      class="rounded-lg bg-foggy-teal px-5 py-3 text-[14px] font-bold text-white hover:bg-foggy-teal-dark transition-colors"
+    >
+      Request a pilot
+    </a>
+  </nav>
+</header>
+
+<!-- Scroll border script — adds border when scrolled past 100px -->
+<script>
+  const nav = document.getElementById('site-nav');
+  if (nav) {
+    const observer = () => {
+      if (window.scrollY > 100) {
+        nav.classList.add('border-slate-200');
+        nav.classList.remove('border-transparent');
+      } else {
+        nav.classList.remove('border-slate-200');
+        nav.classList.add('border-transparent');
+      }
+    };
+    window.addEventListener('scroll', observer, { passive: true });
+    observer();
+  }
+</script>
