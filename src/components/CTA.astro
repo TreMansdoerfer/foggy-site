@@ -6,11 +6,11 @@
     <h2 class="font-bold tracking-tight text-white" style="font-size: 36px;">Talk to us.</h2>
     <p class="mt-4 text-[18px] text-foggy-text-muted">Tell us what you're working on. We respond to every email.</p>
 
-    <form id="cta-form" action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID" method="POST" class="mt-10 flex flex-col gap-4 text-left">
-      <input type="text" name="name" placeholder="Name" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
-      <input type="email" name="email" placeholder="Work email" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
-      <input type="text" name="organization" placeholder="Organization" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
-      <textarea name="message" rows="4" placeholder="What are you trying to do?" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal resize-y"></textarea>
+    <form id="cta-form" class="mt-10 flex flex-col gap-4 text-left">
+      <input type="text" name="name" id="cta-name" placeholder="Name" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
+      <input type="email" name="email" id="cta-email" placeholder="Work email" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
+      <input type="text" name="organization" id="cta-org" placeholder="Organization" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal" />
+      <textarea name="message" id="cta-message" rows="4" placeholder="What are you trying to do?" required class="w-full rounded-lg bg-slate-900 border border-slate-800 px-4 py-3 text-[16px] text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-foggy-teal focus:border-foggy-teal resize-y"></textarea>
       <button type="submit" class="w-full rounded-lg bg-foggy-teal py-3 font-bold text-white hover:bg-teal-500 transition-colors">Send</button>
     </form>
 
@@ -22,7 +22,7 @@
     </div>
 
     <p class="mt-8 text-[14px] text-foggy-text-faint">
-      Or email <a href="mailto:tre@foggy.ai" class="text-foggy-teal hover:underline">tre@foggy.ai</a>. We read everything.
+      Or email <a href="mailto:tmansdoerfer@mba2026.hbs.edu" class="text-foggy-teal hover:underline">tmansdoerfer@mba2026.hbs.edu</a>. We read everything.
     </p>
   </div>
 </section>
@@ -31,12 +31,17 @@
   const form = document.getElementById('cta-form') as HTMLFormElement | null;
   const success = document.getElementById('cta-success');
   if (form && success) {
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      try {
-        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (res.ok) { form.style.display = 'none'; success.classList.remove('hidden'); }
-      } catch { form.submit(); }
+      const name = (document.getElementById('cta-name') as HTMLInputElement)?.value || '';
+      const email = (document.getElementById('cta-email') as HTMLInputElement)?.value || '';
+      const org = (document.getElementById('cta-org') as HTMLInputElement)?.value || '';
+      const msg = (document.getElementById('cta-message') as HTMLTextAreaElement)?.value || '';
+      const subject = encodeURIComponent(`Foggy inquiry from ${name} (${org})`);
+      const body = encodeURIComponent(`From: ${name}\nEmail: ${email}\nOrganization: ${org}\n\n${msg}`);
+      window.location.href = `mailto:tmansdoerfer@mba2026.hbs.edu?subject=${subject}&body=${body}`;
+      form.style.display = 'none';
+      success.classList.remove('hidden');
     });
   }
 </script>
