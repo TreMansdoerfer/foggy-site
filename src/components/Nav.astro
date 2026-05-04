@@ -1,29 +1,20 @@
 ---
-// Sticky nav — four anchor links + CTA
+// Sticky nav — 5 links, transparent to white on scroll
 ---
 
-<header
-  id="site-nav"
-  class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm transition-[border-color] duration-200 border-b border-transparent"
-  style="height: 64px;"
->
-  <nav class="mx-auto flex h-full max-w-6xl items-center justify-between px-6 md:px-8">
-    <!-- Wordmark -->
+<header id="site-nav" class="sticky top-0 z-50 transition-all duration-200 border-b border-transparent bg-transparent">
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
     <a href="/" class="text-foggy-teal text-[22px] font-bold leading-none">Foggy</a>
 
-    <!-- Center links (hidden on mobile) -->
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#problem" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Why Foggy</a>
-      <a href="#how" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">How it works</a>
-      <a href="#personas" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Who it's for</a>
-      <a href="#economics" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Economics</a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#problem" class="text-[15px] text-foggy-text-muted-dark hover:text-white transition-colors nav-link">Why Foggy</a>
+      <a href="#how" class="text-[15px] text-foggy-text-muted-dark hover:text-white transition-colors nav-link">How it works</a>
+      <a href="#sovereignty" class="text-[15px] text-foggy-text-muted-dark hover:text-white transition-colors nav-link">Sovereignty</a>
+      <a href="#compare" class="text-[15px] text-foggy-text-muted-dark hover:text-white transition-colors nav-link">Compare</a>
+      <a href="#economics" class="text-[15px] text-foggy-text-muted-dark hover:text-white transition-colors nav-link">Economics</a>
     </div>
 
-    <!-- CTA -->
-    <a
-      href="#cta"
-      class="rounded-lg bg-foggy-teal px-5 py-3 text-[14px] font-bold text-white hover:bg-foggy-teal-dark transition-colors"
-    >
+    <a href="#cta" class="rounded-lg bg-foggy-teal px-5 py-2.5 text-[14px] font-bold text-white hover:bg-foggy-teal-dark transition-colors">
       Request a pilot
     </a>
   </nav>
@@ -31,17 +22,21 @@
 
 <script>
   const nav = document.getElementById('site-nav');
+  const links = nav?.querySelectorAll('.nav-link');
   if (nav) {
-    const observer = () => {
-      if (window.scrollY > 100) {
-        nav.classList.add('border-slate-200');
-        nav.classList.remove('border-transparent');
+    const update = () => {
+      const scrolled = window.scrollY > 100;
+      if (scrolled) {
+        nav.classList.add('bg-white', 'border-slate-200', 'shadow-sm');
+        nav.classList.remove('bg-transparent', 'border-transparent');
+        links?.forEach(l => { l.classList.remove('text-foggy-text-muted-dark', 'hover:text-white'); l.classList.add('text-foggy-ink-light', 'hover:text-foggy-ink'); });
       } else {
-        nav.classList.remove('border-slate-200');
-        nav.classList.add('border-transparent');
+        nav.classList.remove('bg-white', 'border-slate-200', 'shadow-sm');
+        nav.classList.add('bg-transparent', 'border-transparent');
+        links?.forEach(l => { l.classList.add('text-foggy-text-muted-dark', 'hover:text-white'); l.classList.remove('text-foggy-ink-light', 'hover:text-foggy-ink'); });
       }
     };
-    window.addEventListener('scroll', observer, { passive: true });
-    observer();
+    window.addEventListener('scroll', update, { passive: true });
+    update();
   }
 </script>

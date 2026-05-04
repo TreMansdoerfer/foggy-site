@@ -1,0 +1,95 @@
+---
+// TODO: Replace world map placeholders with SVG world maps.
+// See platform's Data Sovereignty section for reference.
+// Option A: Use react-simple-maps in an Astro island component with world-110m TopoJSON.
+// Option B: Screenshot the platform's maps at high resolution and use as <img> tags.
+
+const laws = [
+  { flag: '🇰🇪', label: 'Kenya DPA 2019' },
+  { flag: '🇷🇼', label: 'Rwanda Law on Personal Data' },
+  { flag: '🇪🇹', label: 'Ethiopia Data Protection Proclamation' },
+  { flag: '🇨🇲', label: 'Cameroon Law No. 2010/012' },
+  { flag: '🇰🇿', label: 'Kazakhstan Law on Personal Data' },
+  { flag: '🇪🇺', label: 'GDPR-equivalent frameworks (EAC)' },
+];
+---
+
+<section id="sovereignty" class="section-dark py-24 md:py-32">
+  <div class="mx-auto max-w-6xl px-6 md:px-8">
+    <h2 class="text-center font-bold tracking-tight text-white" style="font-size: clamp(28px, 4vw, 44px);">
+      Where your data ends up.
+    </h2>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-[20px] text-foggy-text-on-dark">
+      The same sovereignty story, told in a single picture.
+    </p>
+
+    <!-- Dual map cards -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-0 md:gap-4 items-stretch">
+      <!-- Without Foggy -->
+      <div class="rounded-xl border border-foggy-line overflow-hidden" style="background: #1a0e08;">
+        <div class="px-4 py-3 border-b border-foggy-line">
+          <span class="text-[14px] font-bold text-foggy-amber">Without Foggy — Cloud AI</span>
+        </div>
+        <div class="flex items-center justify-center aspect-video">
+          <!-- TODO: Replace with SVG world map showing dashed amber routing lines from Kenya/Rwanda/Ethiopia/Cameroon/Kazakhstan to AWS regions (Virginia, Ireland, Cape Town, Bahrain) -->
+          <span class="text-[14px] italic text-foggy-amber/60 text-center px-4">World map · routing lines from East Africa &amp; Kazakhstan to AWS regions</span>
+        </div>
+        <div class="px-4 py-3 border-t border-foggy-line">
+          <p class="text-[14px] text-foggy-amber">Data travels to US, Europe, Cape Town, or Bahrain for processing.</p>
+        </div>
+      </div>
+
+      <!-- VS divider (desktop only) -->
+      <div class="hidden md:flex items-center justify-center">
+        <div class="flex items-center justify-center w-[60px] h-[60px] rounded-full bg-slate-800 border border-slate-700">
+          <span class="text-white font-bold text-[18px]">VS</span>
+        </div>
+      </div>
+
+      <!-- With Foggy -->
+      <div class="rounded-xl border border-foggy-line overflow-hidden mt-4 md:mt-0" style="background: #022c22;">
+        <div class="px-4 py-3 border-b border-foggy-line">
+          <span class="text-[14px] font-bold text-foggy-green-glow">With Foggy — Local AI</span>
+        </div>
+        <div class="flex items-center justify-center aspect-video">
+          <!-- TODO: Replace with SVG world map. Kenya/Rwanda/Ethiopia/Cameroon/Kazakhstan glow green with no outbound lines -->
+          <span class="text-[14px] italic text-foggy-green-glow/60 text-center px-4">World map · East Africa &amp; Kazakhstan glowing locally</span>
+        </div>
+        <div class="px-4 py-3 border-t border-foggy-line">
+          <p class="text-[14px] text-foggy-green-glow">Processing happens inside national borders. No data egress.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat strip -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden bg-slate-800/50">
+      <div class="bg-slate-900 p-6 text-center">
+        <div class="text-[28px]">✗ ✓</div>
+        <div class="mt-2 text-[12px] font-bold tracking-widest text-foggy-text-muted-dark uppercase">Data Residency</div>
+        <p class="mt-1 text-[15px] text-foggy-text-on-dark">Data never leaves the country with Foggy.</p>
+      </div>
+      <div class="bg-slate-900 p-6 text-center">
+        <div class="text-[28px] font-bold"><span class="text-foggy-green-glow">&lt;5ms</span> <span class="text-foggy-text-muted-dark text-[18px]">vs 60–150ms</span></div>
+        <div class="mt-2 text-[12px] font-bold tracking-widest text-foggy-text-muted-dark uppercase">Latency</div>
+        <p class="mt-1 text-[15px] text-foggy-text-on-dark">Local inference vs cloud round-trip.</p>
+      </div>
+      <div class="bg-slate-900 p-6 text-center">
+        <div class="text-[28px]">✓</div>
+        <div class="mt-2 text-[12px] font-bold tracking-widest text-foggy-text-muted-dark uppercase">Compliance</div>
+        <p class="mt-1 text-[15px] text-foggy-text-on-dark">Kenya Data Protection Act, Rwanda Law on Personal Data, Ethiopia Data Protection Proclamation.</p>
+      </div>
+    </div>
+
+    <!-- Country policy chips -->
+    <div class="mt-8 text-center">
+      <p class="text-[13px] text-foggy-text-muted-dark mb-3">Relevant data protection laws</p>
+      <div class="flex flex-wrap justify-center gap-2">
+        {laws.map((l) => (
+          <span class="rounded-full bg-slate-800 border border-slate-700 px-3 py-1 text-[13px] text-foggy-text-on-dark">
+            {l.flag} {l.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

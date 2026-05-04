@@ -26,23 +26,22 @@ const stats = [
       What it actually does.
     </h2>
 
-    <!-- Stats row -->
+    <!-- Dark stat cards -->
     <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
       {stats.map((s) => (
-        <div class="rounded-xl border border-slate-200 bg-white p-8">
-          <div class="text-[36px] font-bold text-foggy-ink leading-tight">{s.number}</div>
-          <div class="mt-2 text-[17px] text-foggy-ink">{s.label}</div>
-          <div class="mt-2 text-[14px] text-foggy-ink-light">{s.caption}</div>
+        <div class="rounded-xl border border-foggy-line bg-foggy-night p-8">
+          <div class="text-[56px] font-bold text-foggy-teal leading-none">{s.number}</div>
+          <div class="mt-3 text-[16px] font-bold text-white">{s.label}</div>
+          <div class="mt-2 text-[14px] text-foggy-text-on-dark">{s.caption}</div>
         </div>
       ))}
     </div>
 
-    <!-- Narrative paragraph -->
+    <!-- DeepSeek paragraph -->
     <p class="mx-auto mt-12 max-w-2xl text-center text-[17px] leading-[1.6] text-foggy-ink-light">
       Microsoft's AI Economy Institute reported in January 2026 that DeepSeek usage in Africa runs 2-4× higher than any other region — direct evidence that emerging-market customers will route around hyperscalers when something fits their constraints. Foggy is the platform that finally fits.
     </p>
 
-    <!-- Demo embed placeholder -->
     <LiveDemoEmbed />
   </div>
 </section>
