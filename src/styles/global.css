@@ -7,33 +7,28 @@
     scroll-behavior: smooth;
   }
   body {
-    color: #0a1626;
-    background: #ffffff;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.025em;
+    background: #0a1626;
+    color: #e2e8f0;
+    font-family: 'Inter Variable', system-ui, sans-serif;
   }
   ::selection {
-    background-color: #14b8a6;
-    color: #ffffff;
+    background: #14b8a6;
+    color: white;
   }
 }
 
 @layer components {
   .hero-gradient {
-    background:
-      radial-gradient(ellipse at bottom right, rgba(20, 184, 166, 0.18) 0%, transparent 50%),
-      radial-gradient(ellipse at top left, rgba(20, 184, 166, 0.06) 0%, transparent 50%),
-      linear-gradient(180deg, #0a1626 0%, #050d18 100%);
+    background: linear-gradient(180deg, #0a1626 0%, #0a1626 60%, #050d18 100%);
   }
-
-  .section-dark {
-    background: #0a1626;
-    color: #cbd5e1;
-  }
-
-  .section-divider-glow {
-    background: linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 50%, transparent 100%);
-    height: 1px;
+  .hero-accent {
+    position: absolute;
+    top: -100px;
+    right: -200px;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
   }
 }

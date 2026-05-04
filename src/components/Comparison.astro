@@ -1,10 +1,9 @@
 ---
-// Comparison table — Foggy vs cloud providers
 const rows = [
   { label: 'Cost vs baseline', foggy: '32–84% cheaper', aws: 'Baseline', gcp: 'Similar to AWS', azure: 'Similar to AWS' },
   { label: 'Swahili language support', foggy: '✓ Native (50+ languages)', aws: 'Limited', gcp: 'Limited', azure: 'Limited' },
   { label: 'Kinyarwanda support', foggy: '✓ Native', aws: 'Not available', gcp: 'Not available', azure: 'Not available' },
-  { label: 'Data sovereignty', foggy: '✓ Fully local — data never leaves country', aws: 'Data crosses borders', gcp: 'Data crosses borders', azure: 'Data crosses borders' },
+  { label: 'Data sovereignty', foggy: '✓ Fully local', aws: 'Data crosses borders', gcp: 'Data crosses borders', azure: 'Data crosses borders' },
   { label: 'Egress fees', foggy: '✓ None', aws: '$0.09–0.154/GB', gcp: '$0.08–0.12/GB', azure: '$0.05–0.087/GB' },
   { label: 'Closest region to Nairobi', foggy: 'On-premise', aws: 'Cape Town (2,800 km)', gcp: 'Johannesburg (2,800 km)', azure: 'South Africa (2,800 km)' },
   { label: 'Offline / air-gapped', foggy: '✓ Yes', aws: 'No', gcp: 'No', azure: 'No' },
@@ -14,47 +13,52 @@ const rows = [
 function cellClass(val: string, isFoggy: boolean): string {
   if (isFoggy) return 'text-foggy-teal-dark font-bold';
   if (['Limited', 'Not available', 'Data crosses borders', 'No'].some(p => val.includes(p)) || val.startsWith('$'))
-    return 'text-foggy-amber';
-  return 'text-foggy-ink-light';
+    return 'text-amber-700';
+  return 'text-slate-500';
 }
 ---
 
-<section id="compare" class="py-24 md:py-32 bg-foggy-bg">
+<section id="compare" class="py-24 md:py-32">
   <div class="mx-auto max-w-6xl px-6 md:px-8">
-    <h2 class="text-center font-bold tracking-tight text-foggy-ink" style="font-size: clamp(28px, 4vw, 44px);">
-      How Foggy compares.
-    </h2>
-    <p class="mx-auto mt-4 max-w-2xl text-center text-[17px] text-foggy-ink-light">
-      Apples-to-apples against the cloud providers East African institutions actually consider.
-    </p>
+    <!-- Light card embedded in dark page -->
+    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-10 md:p-14">
+      <h2 class="text-center font-bold tracking-tight text-foggy-ink" style="font-size: 32px;">
+        How Foggy compares.
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-center text-[17px] text-slate-600">
+        Apples-to-apples against the cloud providers East African institutions actually consider.
+      </p>
 
-    <div class="mt-12 overflow-x-auto rounded-xl border border-slate-200 bg-white">
-      <table class="w-full text-[15px] border-collapse min-w-[700px]">
-        <thead>
-          <tr class="border-b border-slate-200">
-            <th class="px-6 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-ink-light"></th>
-            <th class="px-6 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-teal-dark bg-teal-50">Foggy (Local)</th>
-            <th class="px-6 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-ink-light">AWS</th>
-            <th class="px-6 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-ink-light">Google Cloud</th>
-            <th class="px-6 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-ink-light">Azure</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr class="border-b border-slate-100">
-              <td class="px-6 py-4 font-bold text-foggy-ink">{r.label}</td>
-              <td class={`px-6 py-4 bg-teal-50/50 ${cellClass(r.foggy, true)}`}>{r.foggy}</td>
-              <td class={`px-6 py-4 ${cellClass(r.aws, false)}`}>{r.aws}</td>
-              <td class={`px-6 py-4 ${cellClass(r.gcp, false)}`}>{r.gcp}</td>
-              <td class={`px-6 py-4 ${cellClass(r.azure, false)}`}>{r.azure}</td>
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full text-[15px] border-collapse min-w-[700px]">
+          <thead>
+            <tr class="bg-slate-100">
+              <th class="px-5 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-slate-700"></th>
+              <th class="px-5 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-foggy-teal-dark bg-slate-100">
+                <span class="inline-block w-2 h-2 rounded-full bg-foggy-teal mr-2"></span>Foggy (Local)
+              </th>
+              <th class="px-5 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-slate-700">AWS</th>
+              <th class="px-5 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-slate-700">Google Cloud</th>
+              <th class="px-5 py-4 text-left text-[12px] font-bold tracking-widest uppercase text-slate-700">Azure</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr class="border-b border-slate-200">
+                <td class="px-5 py-4 font-bold text-foggy-ink">{r.label}</td>
+                <td class={`px-5 py-4 ${cellClass(r.foggy, true)}`}>{r.foggy}</td>
+                <td class={`px-5 py-4 ${cellClass(r.aws, false)}`}>{r.aws}</td>
+                <td class={`px-5 py-4 ${cellClass(r.gcp, false)}`}>{r.gcp}</td>
+                <td class={`px-5 py-4 ${cellClass(r.azure, false)}`}>{r.azure}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-    <p class="mt-4 text-center text-[14px] italic text-foggy-ink-light">
-      Cost comparisons based on live benchmarks run March 2026. Language support based on published AWS, GCP, and Azure documentation.
-    </p>
+      <p class="mt-6 text-center text-[14px] italic text-slate-500">
+        Cost comparisons based on live benchmarks. Language support based on published AWS, GCP, and Azure documentation.
+      </p>
+    </div>
   </div>
 </section>
