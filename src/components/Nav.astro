@@ -1,5 +1,5 @@
 ---
-// Sticky nav — border appears on scroll via a tiny inline script
+// Sticky nav — four anchor links + CTA
 ---
 
 <header
@@ -14,8 +14,9 @@
     <!-- Center links (hidden on mobile) -->
     <div class="hidden md:flex items-center gap-8">
       <a href="#problem" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Why Foggy</a>
-      <a href="#evidence" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">How it works</a>
+      <a href="#how" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">How it works</a>
       <a href="#personas" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Who it's for</a>
+      <a href="#economics" class="text-[16px] text-foggy-ink-light hover:text-foggy-ink transition-colors">Economics</a>
     </div>
 
     <!-- CTA -->
@@ -28,7 +29,6 @@
   </nav>
 </header>
 
-<!-- Scroll border script — adds border when scrolled past 100px -->
 <script>
   const nav = document.getElementById('site-nav');
   if (nav) {

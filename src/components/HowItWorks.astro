@@ -1,0 +1,49 @@
+---
+// How it works — three-step horizontal layout
+const steps = [
+  {
+    num: '01',
+    heading: 'Hardware joins the fleet',
+    body: "A bank or ministry runs one install command on their existing machines. Each becomes a worker node. Workloads run there. Data doesn't leave.",
+  },
+  {
+    num: '02',
+    heading: 'Foggy routes the work',
+    body: 'Our orchestration layer schedules every transcription, embedding, or classification request to the right local node. Customers see a single API. We handle the chunking, retries, and billing.',
+  },
+  {
+    num: '03',
+    heading: 'Institutions get paid',
+    body: 'Compute partners take a 25% revenue share for hosting workloads on hardware they already own. Foggy keeps 75%. Both sides earn.',
+  },
+];
+---
+
+<section id="how" class="py-24 md:py-32 bg-white">
+  <div class="mx-auto max-w-6xl px-6 md:px-8">
+    <h2 class="font-bold tracking-tight text-foggy-ink" style="font-size: clamp(28px, 4vw, 44px);">
+      Compute that's already in the building.
+    </h2>
+
+    <p class="mt-4 max-w-2xl text-[20px] text-foggy-ink-light leading-relaxed">
+      Most AI infrastructure companies build new data centers. Foggy doesn't. We pool the compute that already exists inside our customers' institutions — the laptops in branch offices, the desktops in admin departments, the servers running at 15% utilization — into a single inference fleet they can use through a simple API.
+    </p>
+
+    <!-- Three steps -->
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+      {steps.map((s) => (
+        <div>
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-foggy-teal text-white font-bold text-[16px]">
+            {s.num}
+          </div>
+          <h3 class="mt-4 text-[20px] font-bold text-foggy-ink">{s.heading}</h3>
+          <p class="mt-2 text-[17px] leading-[1.6] text-foggy-ink-light">{s.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-12 text-[15px] italic text-foggy-ink-light">
+      Inspired by SETI@home and BOINC. Adapted for the modern AI inference workload, the regulated enterprise customer, and the African context.
+    </p>
+  </div>
+</section>
