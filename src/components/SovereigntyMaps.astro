@@ -1,7 +1,22 @@
 ---
-// TODO: Replace world map placeholder SVGs with full geographic maps.
-// Option A: Hand-author SVG paths for affected countries.
-// Option B: Screenshot platform's Data Sovereignty maps as high-res images.
+import WorldMap from './maps/WorldMap.astro';
+
+const customerIds = ['404', '646', '231', '120', '398'];
+
+const customerCities: { name: string; coords: [number, number] }[] = [
+  { name: 'Nairobi', coords: [36.8219, -1.2921] },
+  { name: 'Kigali', coords: [30.0588, -1.9536] },
+  { name: 'Addis Ababa', coords: [38.7578, 9.0292] },
+  { name: 'Yaoundé', coords: [11.5021, 3.8480] },
+  { name: 'Astana', coords: [71.4491, 51.1694] },
+];
+
+const awsRegions: { name: string; coords: [number, number] }[] = [
+  { name: 'Virginia', coords: [-77.4360, 38.9469] },
+  { name: 'Ireland', coords: [-6.2603, 53.3498] },
+  { name: 'Cape Town', coords: [18.4241, -33.9249] },
+  { name: 'Bahrain', coords: [50.5577, 26.0667] },
+];
 ---
 
 <section id="sovereignty" class="py-24 md:py-32">
@@ -16,74 +31,38 @@
     <!-- Dual map cards -->
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Without Foggy -->
-      <div class="rounded-xl border border-slate-800 overflow-hidden bg-slate-950">
-        <div class="px-5 py-3 border-b border-slate-800">
-          <span class="text-[14px] font-bold text-foggy-amber">Without Foggy — Cloud AI</span>
+      <div>
+        <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-800">
+            <span class="text-[14px] font-bold text-foggy-amber">Without Foggy — Cloud AI</span>
+          </div>
+          <div class="aspect-video p-3">
+            <WorldMap
+              mode="without"
+              highlightCountryIds={customerIds}
+              customerCities={customerCities}
+              awsRegions={awsRegions}
+            />
+          </div>
         </div>
-        <div class="relative aspect-video bg-amber-950/30 flex items-center justify-center">
-          <!-- Placeholder SVG — dashed amber lines from East Africa to AWS regions -->
-          <svg viewBox="0 0 400 200" class="w-full h-full opacity-60" aria-label="Data routing from East Africa to cloud regions">
-            <!-- Source cities -->
-            <circle cx="220" cy="105" r="3" fill="#fb923c"/> <!-- Nairobi -->
-            <circle cx="215" cy="90" r="3" fill="#fb923c"/>  <!-- Kigali -->
-            <circle cx="225" cy="80" r="3" fill="#fb923c"/>  <!-- Addis -->
-            <circle cx="190" cy="100" r="3" fill="#fb923c"/> <!-- Yaoundé -->
-            <circle cx="310" cy="50" r="3" fill="#fb923c"/>  <!-- Almaty -->
-            <!-- Target regions -->
-            <circle cx="80" cy="60" r="5" fill="none" stroke="#fb923c" stroke-width="1.5"/>  <!-- Virginia -->
-            <circle cx="160" cy="45" r="5" fill="none" stroke="#fb923c" stroke-width="1.5"/> <!-- Ireland -->
-            <circle cx="200" cy="155" r="5" fill="none" stroke="#fb923c" stroke-width="1.5"/> <!-- Cape Town -->
-            <circle cx="270" cy="65" r="5" fill="none" stroke="#fb923c" stroke-width="1.5"/>  <!-- Bahrain -->
-            <!-- Routing lines -->
-            <line x1="220" y1="105" x2="200" y2="155" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="220" y1="105" x2="160" y2="45" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="215" y1="90" x2="160" y2="45" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="225" y1="80" x2="270" y2="65" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="190" y1="100" x2="160" y2="45" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="310" y1="50" x2="270" y2="65" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
-            <line x1="160" y1="45" x2="80" y2="60" stroke="#fb923c" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
-            <!-- Labels -->
-            <text x="75" y="50" fill="#94a3b8" font-size="8" text-anchor="middle">Virginia</text>
-            <text x="160" y="37" fill="#94a3b8" font-size="8" text-anchor="middle">Ireland</text>
-            <text x="200" y="170" fill="#94a3b8" font-size="8" text-anchor="middle">Cape Town</text>
-            <text x="270" y="57" fill="#94a3b8" font-size="8" text-anchor="middle">Bahrain</text>
-          </svg>
-        </div>
-        <div class="px-5 py-3 border-t border-slate-800">
-          <p class="text-[14px] text-amber-400">Data travels to US, Europe, Cape Town, or Bahrain for processing.</p>
-        </div>
+        <p class="text-amber-400 text-sm mt-3">Data travels to US, Europe, Cape Town, or Bahrain for processing.</p>
       </div>
 
       <!-- With Foggy -->
-      <div class="rounded-xl border border-slate-800 overflow-hidden bg-slate-950">
-        <div class="px-5 py-3 border-b border-slate-800">
-          <span class="text-[14px] font-bold text-teal-400">With Foggy — Local AI</span>
+      <div>
+        <div class="rounded-xl border border-slate-800 bg-emerald-950/30 overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-800">
+            <span class="text-[14px] font-bold text-emerald-400">With Foggy — Local AI</span>
+          </div>
+          <div class="aspect-video p-3">
+            <WorldMap
+              mode="with"
+              highlightCountryIds={customerIds}
+              customerCities={customerCities}
+            />
+          </div>
         </div>
-        <div class="relative aspect-video bg-teal-950/30 flex items-center justify-center">
-          <!-- Placeholder SVG — glowing local dots, no outbound lines -->
-          <svg viewBox="0 0 400 200" class="w-full h-full opacity-70" aria-label="Data stays local in each country">
-            <!-- Local processing dots with glow -->
-            <circle cx="220" cy="105" r="6" fill="#14b8a6" opacity="0.3"/>
-            <circle cx="220" cy="105" r="3" fill="#14b8a6"/>
-            <circle cx="215" cy="90" r="6" fill="#14b8a6" opacity="0.3"/>
-            <circle cx="215" cy="90" r="3" fill="#14b8a6"/>
-            <circle cx="225" cy="80" r="6" fill="#14b8a6" opacity="0.3"/>
-            <circle cx="225" cy="80" r="3" fill="#14b8a6"/>
-            <circle cx="190" cy="100" r="6" fill="#14b8a6" opacity="0.3"/>
-            <circle cx="190" cy="100" r="3" fill="#14b8a6"/>
-            <circle cx="310" cy="50" r="6" fill="#14b8a6" opacity="0.3"/>
-            <circle cx="310" cy="50" r="3" fill="#14b8a6"/>
-            <!-- Labels -->
-            <text x="220" y="120" fill="#94a3b8" font-size="8" text-anchor="middle">Nairobi</text>
-            <text x="215" y="82" fill="#94a3b8" font-size="8" text-anchor="end">Kigali</text>
-            <text x="225" y="72" fill="#94a3b8" font-size="8" text-anchor="start">Addis</text>
-            <text x="190" y="112" fill="#94a3b8" font-size="8" text-anchor="middle">Yaoundé</text>
-            <text x="310" y="42" fill="#94a3b8" font-size="8" text-anchor="middle">Almaty</text>
-          </svg>
-        </div>
-        <div class="px-5 py-3 border-t border-slate-800">
-          <p class="text-[14px] text-teal-400">Processing happens inside national borders. No data egress.</p>
-        </div>
+        <p class="text-emerald-400 text-sm mt-3">Processing happens inside national borders. No data egress.</p>
       </div>
     </div>
 

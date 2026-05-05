@@ -4,4 +4,9 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   site: 'https://foggy.ai',
+  vite: {
+    json: {
+      stringify: false,
+    },
+  },
 });

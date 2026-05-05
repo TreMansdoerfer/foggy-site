@@ -1,0 +1,104 @@
+---
+import { feature } from 'topojson-client';
+import { geoEqualEarth, geoPath } from 'd3-geo';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+interface Props {
+  mode: 'without' | 'with';
+  highlightCountryIds: string[];
+  awsRegions?: { name: string; coords: [number, number] }[];
+  customerCities?: { name: string; coords: [number, number] }[];
+}
+
+const { mode, highlightCountryIds, awsRegions = [], customerCities = [] } = Astro.props;
+
+// Load TopoJSON at build time via filesystem (avoids Vite JSON import issues)
+const topoPath = resolve('node_modules/world-atlas/countries-110m.json');
+const worldData = JSON.parse(readFileSync(topoPath, 'utf-8'));
+
+// Convert TopoJSON to GeoJSON FeatureCollection
+const countries = feature(worldData, worldData.objects.countries) as any;
+
+// Equal Earth projection
+const width = 800;
+const height = 450;
+const projection = geoEqualEarth()
+  .scale(155)
+  .translate([width / 2, height / 2]);
+const pathGenerator = geoPath().projection(projection);
+
+// Generate all country path strings at build time
+const countryPaths: { d: string; highlighted: boolean }[] = [];
+for (const country of countries.features) {
+  const d = pathGenerator(country);
+  if (d) {
+    countryPaths.push({
+      d,
+      highlighted: highlightCountryIds.includes(String(country.id)),
+    });
+  }
+}
+
+// Project coordinates
+const projectedCities = customerCities.map(c => ({
+  ...c,
+  x: (projection(c.coords) as [number, number])[0],
+  y: (projection(c.coords) as [number, number])[1],
+}));
+const projectedRegions = awsRegions.map(r => ({
+  ...r,
+  x: (projection(r.coords) as [number, number])[0],
+  y: (projection(r.coords) as [number, number])[1],
+}));
+
+const isWithout = mode === 'without';
+---
+
+<svg
+  viewBox={`0 0 ${width} ${height}`}
+  xmlns="http://www.w3.org/2000/svg"
+  class="w-full h-full"
+  role="img"
+  aria-label={isWithout ? 'Map showing data routed to AWS regions outside Africa' : 'Map showing data staying within country borders'}
+>
+  {/* Country shapes */}
+  {countryPaths.map(({ d, highlighted }) => (
+    <path
+      d={d}
+      fill={highlighted ? (isWithout ? '#fb923c' : '#10b981') : (isWithout ? '#1e293b' : '#0f1d2e')}
+      stroke={highlighted ? (isWithout ? '#fb923c' : '#34d399') : (isWithout ? '#334155' : '#1e293b')}
+      stroke-width={highlighted ? '0.8' : '0.3'}
+      opacity={highlighted ? '0.85' : '1'}
+    />
+  ))}
+
+  {/* Routing lines: cities → AWS regions (without mode only) */}
+  {isWithout && projectedCities.map(city =>
+    projectedRegions.map(region => (
+      <line
+        x1={String(city.x)} y1={String(city.y)}
+        x2={String(region.x)} y2={String(region.y)}
+        stroke="#fb923c" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.4"
+      />
+    ))
+  )}
+
+  {/* AWS region dots + labels */}
+  {isWithout && projectedRegions.map(r => (
+    <g>
+      <circle cx={String(r.x)} cy={String(r.y)} r="5" fill="#fb923c" opacity="0.9" />
+      <circle cx={String(r.x)} cy={String(r.y)} r="9" fill="none" stroke="#fb923c" stroke-width="1" opacity="0.35" />
+      <text x={String(r.x)} y={String(r.y - 12)} text-anchor="middle" fill="#fb923c" font-size="9" font-weight="700">{r.name}</text>
+    </g>
+  ))}
+
+  {/* Customer city dots + labels */}
+  {projectedCities.map(city => (
+    <g>
+      {!isWithout && <circle cx={String(city.x)} cy={String(city.y)} r="14" fill="#10b981" opacity="0.15" />}
+      <circle cx={String(city.x)} cy={String(city.y)} r="3.5" fill={isWithout ? '#fb923c' : '#10b981'} />
+      <text x={String(city.x)} y={String(city.y + 14)} text-anchor="middle" fill={isWithout ? '#fdba74' : '#6ee7b7'} font-size="9" font-weight="700">{city.name}</text>
+    </g>
+  ))}
+</svg>
